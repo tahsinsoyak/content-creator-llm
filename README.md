@@ -25,7 +25,7 @@ This project is a Flask web application designed to generate structured content 
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/flask-groq-api.git
+    git clone https://github.com/tahsinsoyak/content-creator-llm.git
     cd flask-groq-api
     ```
 
