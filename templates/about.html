@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'partials/header.html' %}
+    <style>
+        footer {
+            position: static !important;
+        }
+    </style>
+</head>
+<body>
+    {% include 'partials/navbar.html' %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h1 class="card-title text-center"><i class="fas fa-info-circle"></i> About This Project</h1>
+                        <p class="card-text mt-3">
+                            This project is designed to streamline the creation of structured and SEO-optimized content across multiple platforms like blogs, social media, and email campaigns. 
+                            It leverages advanced AI models and intuitive user prompts to deliver JSON-formatted drafts tailored for professional use.
+                        </p>
+                        <p class="card-text">
+                            <strong>Key Features:</strong>
+                        </p>
+                        <ul>
+                            <li>Support for multiple content formats: Blog posts, Instagram posts, LinkedIn updates, and emails.</li>
+                            <li>Customizable prompts for tailored outputs aligned with specific needs.</li>
+                            <li>Automatic error correction and JSON validation for reliable results.</li>
+                        </ul>
+                        <p class="card-text">
+                            <strong>Technology Stack:</strong>
+                        </p>
+                        <ul>
+                            <li><strong>Backend:</strong> Flask framework for handling web requests and user inputs.</li>
+                            <li><strong>AI Integration:</strong> Groq API for generating AI-driven content.</li>
+                            <li><strong>Frontend:</strong> HTML, CSS, and JavaScript for a responsive user interface.</li>
+                            <li><strong>Environment Management:</strong> dotenv for secure API key storage.</li>
+                        </ul>
+                        <p class="card-text">
+                            This project demonstrates the potential of AI in content creation, offering a user-friendly interface for generating high-quality, platform-specific drafts.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'partials/footer.html' %}
+</body>
+</html>

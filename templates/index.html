@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% include 'partials/header.html' %}
+    <body class="d-flex flex-column min-vh-100">
+        {% include 'partials/navbar.html' %}
+        <div class="container pt-5 flex-grow-1">
+            <div class="row">
+                <!-- Form Section -->
+                <div class="col-md-4 form-section">
+                    <h2 class="text-primary text-center">Create Content</h2>
+                    <form method="POST" id="contentForm">
+                        <div class="mb-3">
+                            <label for="content_type">Choose Content Type</label>
+                            <div class="input-group">
+                                <span class="input-group-text" id="iconDisplay">
+                                    <i class="fa-solid fa-list"></i>
+                                </span>
+                                <select class="form-select custom-select" name="content_type" id="content_type" required>
+                                    <option value="blog" data-icon="fa-solid fa-pen">Blog</option>
+                                    <option value="instagram" data-icon="fa-brands fa-instagram">Instagram</option>
+                                    <option value="linkedin" data-icon="fa-brands fa-linkedin">LinkedIn</option>
+                                    <option value="email" data-icon="fa-solid fa-envelope">Email</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="user_prompt">Enter Your Prompt</label>
+                            <textarea class="form-control" name="user_prompt" id="user_prompt" rows="4" placeholder="Type your prompt here..." required></textarea>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa-solid fa-magic"></i> Generate Content
+                            </button>
+                        </div>
+                    </form>
+                </div>
+        
+                <!-- Output Section -->
+                <div class="col-md-8 output-section" id="outputSection">
+                    <h2 class="text-success text-center">Generated Content</h2>
+                    {% if structured_content %}
+                        <div class="output">
+                            <h2>Generated Content:</h2>
+                            {% if structured_content.error %}
+                                <p>{{ structured_content.error }}</p>
+                            {% else %}
+                                {% if content_type == "blog" %}
+                                    <!-- Blog Content Format -->
+                                    <div>
+                                        <strong>Başlık:</strong>
+                                        <p>{{ structured_content.başlık }}</p>
+                                    </div>
+                                    <div>
+                                        <strong>Giriş:</strong>
+                                        <p>{{ structured_content.giriş }}</p>
+                                    </div>
+                                    <div>
+                                        <strong>Alt Başlıklar:</strong>
+                                        <ul>
+                                            {% for alt_başlık in structured_content.alt_başlıklar %}
+                                                <li>
+                                                    <strong>{{ alt_başlık.başlık }}</strong>: {{ alt_başlık.içerik }}
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <strong>Sonuç:</strong>
+                                        <p>{{ structured_content.sonuç }}</p>
+                                    </div>
+                                    <div>
+                                        <strong>Anahtar Kelimeler:</strong>
+                                        <p>{{ structured_content.anahtar_kelime | join(', ') }}</p>
+                                    </div>
+                                    <div>
+                                        <strong>Hashtagler:</strong>
+                                        <p>{{ structured_content.hashtag | join(', ') }}</p>
+                                    </div>
+                                    <div>
+                                        <strong>SEO Odak Cümleleri:</strong>
+                                        <ul>
+                                            {% for seo in structured_content.seo_odak_cümleleri %}
+                                                <li>{{ seo }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <strong>Bulletpoints:</strong>
+                                        <ul>
+                                            {% for bullet in structured_content.bulletpoints %}
+                                                <li>{{ bullet }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% elif content_type == "instagram" %}
+                                    <!-- Instagram Content Format -->
+                                    <div>
+                                        <strong>Başlık:</strong>
+                                        <p>{{ structured_content.başlık }}</p>
+                                    </div>
+                                    <div>
+                                        <strong>İçerik:</strong>
+                                        <p>{{ structured_content.içerik }}</p>
+                                    </div>
+                                    <div>
+                                        <strong>Emojiler:</strong>
+                                        <p>{{ structured_content.emoji | join(' ') }}</p>
+                                    </div>
+                                    <div>
+                                        <strong>Çağrılar:</strong>
+                                        <p>{{ structured_content.çağrılar | join(', ') }}</p>
+                                    </div>
+                                    <div>
+                                        <strong>Hashtagler:</strong>
+                                        <p>{{ structured_content.hashtag | join(', ') }}</p>
+                                    </div>
+                                    <div>
+                                        <strong>Konum Etiketi:</strong>
+                                        <p>{{ structured_content.konum_etiket }}</p>
+                                    </div>
+                                {% elif content_type == "linkedin" %}
+                                    <!-- LinkedIn Content Format -->
+                                    <div>
+                                        <strong>Giriş:</strong>
+                                        <p>{{ structured_content.giriş }}</p>
+                                    </div>
+                                    <div>
+                                        <strong>Ana İçerik:</strong>
+                                        <p>{{ structured_content.ana_içerik }}</p>
+                                    </div>
+                                    <div>
+                                        <strong>Sonuç:</strong>
+                                        <p>{{ structured_content.sonuç }}</p>
+                                    </div>
+                                    <div>
+                                        <strong>Hashtagler:</strong>
+                                        <p>{{ structured_content.hashtag | join(', ') }}</p>
+                                    </div>
+                                    <div>
+                                        <strong>Çağrılar:</strong>
+                                        <p>{{ structured_content.çağrılar | join(', ') }}</p>
+                                    </div>
+                                    <div>
+                                        <strong>Soru:</strong>
+                                        <p>{{ structured_content.soru }}</p>
+                                    </div>
+                                {% elif content_type == "email" %}
+                                    <!-- Email Content Format -->
+                                    <div>
+                                        <strong>Konu Satırı:</strong>
+                                        <p>{{ structured_content.konu_satırı }}</p>
+                                    </div>
+                                    <div>
+                                        <strong>Kişisel Giriş:</strong>
+                                        <p>{{ structured_content.kişisel_giriş }}</p>
+                                    </div>
+                                    <div>
+                                        <strong>Ana İçerik:</strong>
+                                        <p>{{ structured_content.ana_içerik }}</p>
+                                    </div>
+                                    <div>
+                                        <strong>Harekete Geçirici Mesaj:</strong>
+                                        <p>{{ structured_content.harekete_geçirici_mesaj }}</p>
+                                    </div>
+                                    <div>
+                                        <strong>Kapanış:</strong>
+                                        <p>{{ structured_content.kapanış }}</p>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Loading Spinner -->
+        <div id="loadingSpinner" class="spinner-overlay">
+            <div class="spinner-container">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="loading-text">Please wait, generating content...</p>
+            </div>
+        </div>
+        {% include 'partials/footer.html' %}
+        <script>
+            $(document).ready(function () {
+                console.log("Document is ready");
+                $('#loadingSpinner').hide();
+                console.log("Spinner hidden");
+        
+                $('#contentForm').on('submit', function (e) {
+                    e.preventDefault();  // Prevent the default form submission
+                    console.log("Form submitted");
+                    $('#loadingSpinner').fadeIn();  // Show spinner
+        
+                    // Use AJAX to submit the form data
+                    $.ajax({
+                        url: "/",  // The URL to send the request to
+                        type: "POST",
+                        data: $(this).serialize(),  // Serialize form data
+                        success: function (response) {
+                            // Update the output section with the response
+                            $('#outputSection').html($(response).find('#outputSection').html());
+                            console.log("Response received");
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Error occurred: ", error);
+                            $('#outputSection').html("<p>An error occurred while processing your request.</p>");
+                        },
+                        complete: function () {
+                            $('#loadingSpinner').fadeOut();  // Hide spinner after request completes
+                        }
+                    });
+                });
+        
+                $('#content_type').on('change', function() {
+                    var selectedOption = $(this).find('option:selected');
+                    var iconClass = selectedOption.data('icon');
+                    console.log("Selected option:", selectedOption.text());
+                    console.log("Icon class:", iconClass);
+        
+                    // Update the icon class
+                    $('#iconDisplay i').attr('class', iconClass);
+                });
+            });
+        </script>
+        
+        </body>
+</html>
+    
